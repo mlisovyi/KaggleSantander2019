@@ -1,0 +1,7 @@
+md5: 512227457bccf4cb2d7476ce1c98a162
+outs:
+- cache: true
+  md5: f61cb354ab1b248fd12ecb91f4b25b2a.dir
+  metric: false
+  path: /home/mlisovyi/.kaggle/competitions/santander-customer-transaction-prediction
+wdir: .
