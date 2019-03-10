@@ -1,0 +1,14 @@
+# keggler is missing for the moment: https://github.com/mlisovyi/Keggler
+name: KaggleSantander2019
+channels:
+  - defaults
+dependencies:
+  - python=3.5.5
+  - numpy=1.14.3
+  - pandas=0.23.4
+  - scikit-learn=0.19.1
+  - lightgbm=2.2.0
+  - seaborn=0.8.1
+  - matplotlib=2.2.2 
+  - pip:
+    - mlflow
