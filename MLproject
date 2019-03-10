@@ -4,4 +4,4 @@ conda_env: conda.yaml
 
 entry_points:
   main:
-    command: "jupyter nbconvert tmp.ipynb --clear-output --inplace --execute --ExecutePreprocessor.timeout=-1"
+    command: "jupyter nbconvert Process.ipynb --clear-output --inplace --execute --ExecutePreprocessor.timeout=-1"
