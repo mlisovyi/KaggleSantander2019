@@ -28,13 +28,18 @@ In order to execute the code you will need to configure a python virtual environ
 There will be a `requirements.txt` file provided in the future to simplify setup.
 
 ## MLflow usage.
+
+### Bookkeeping of individual experiments
+
 The goal is to demonstrate how to use MLflow tracking. 
+The [Process notebook](../Process.ipynb) contains an example.
 A key detail is that we want to use MLflow functionalities from a jupyter notebook.
 MLflow is designed to work with both python scripts as well as notebooks.
 However, some info is not picked by MLflow, when executed in a notebook,
 e.g. [git revision, see this issue on github](https://github.com/mlflow/mlflow/issues/973).
 
 There are only a few steps to get you going:
+
 1. Set up an _experiment_, e.g. 
     ```python
     mlflow.set_experiment('Cool_Experiment_Name')
@@ -54,6 +59,16 @@ There are only a few steps to get you going:
     Here, `kg.get_last_git_commit()` is a function from [keggler](https://github.com/mlisovyi/Keggler)
     that basically reads off the latest git revision in the current directory.
     
-3. Log parameters (`mlflow.log_param('seed_cv', seed_cv)`),
-    metrics (`mlflow.log_metric('N_trees', n_trees_ave)`) and
-    artifacts, e.g. out-of-fold and submission predictions (`mlflow.log_artifact(os.getcwd()+'/out/oof.csv')`)
+3. Log parameters, metrics and artifacts, e.g. out-of-fold and submission predictions
+    ```python
+    mlflow.log_param('seed_cv', seed_cv) # store the random seed used by the model
+    ... train a model ...
+   mlflow.log_metric('N_trees', n_trees_ave) # store the average number of trees
+   mlflow.log_artifact(os.getcwd()+'/out/oof.csv') # store saved oof predictions on the training data
+   ```
+
+As a result, for each model that you train you will keep track of input parameters and its performance.
+In addition, files with target prediction are stored, that are relevant for [stacking](http://blog.kaggle.com/2017/06/15/stacking-made-easy-an-introduction-to-stacknet-by-competitions-grandmaster-marios-michailidis-kazanova/),
+i.e. building a meta-model that is trained on predictions of other models.
+
+### 
