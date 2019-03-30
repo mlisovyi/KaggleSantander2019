@@ -32,7 +32,7 @@ There will be a `requirements.txt` file provided in the future to simplify setup
 ### Bookkeeping of individual experiments
 
 The goal is to demonstrate how to use MLflow tracking. 
-The [Process notebook](../Process.ipynb) contains an example.
+The [Process notebook](ttps://github.com/mlisovyi/KaggleSantander2019/Process.ipynb) contains an example.
 A key detail is that we want to use MLflow functionalities from a jupyter notebook.
 MLflow is designed to work with both python scripts as well as notebooks.
 However, some info is not picked by MLflow, when executed in a notebook,
@@ -50,8 +50,8 @@ There are only a few steps to get you going:
     ```python
     with mlflow.start_run(source_type=SourceType.NOTEBOOK, source_version=kg.get_last_git_commit())
       ...
-       do some ML magic and record parameters and metrics
-       ...
+      #do some ML magic and record parameters and metrics
+      ...
      ```
     One run defines a single test.
     Note, that `source_type` is not very critical, but `source_version` argument is needed,
@@ -62,13 +62,52 @@ There are only a few steps to get you going:
 3. Log parameters, metrics and artifacts, e.g. out-of-fold and submission predictions
     ```python
     mlflow.log_param('seed_cv', seed_cv) # store the random seed used by the model
-    ... train a model ...
-   mlflow.log_metric('N_trees', n_trees_ave) # store the average number of trees
-   mlflow.log_artifact(os.getcwd()+'/out/oof.csv') # store saved oof predictions on the training data
-   ```
+    #... train a model ...
+    mlflow.log_metric('N_trees', n_trees_ave) # store the average number of trees
+    mlflow.log_artifact(os.getcwd()+'/out/oof.csv') # store saved oof predictions on the training data
+    ```
 
 As a result, for each model that you train you will keep track of input parameters and its performance.
 In addition, files with target prediction are stored, that are relevant for [stacking](http://blog.kaggle.com/2017/06/15/stacking-made-easy-an-introduction-to-stacknet-by-competitions-grandmaster-marios-michailidis-kazanova/),
 i.e. building a meta-model that is trained on predictions of other models.
 
-### 
+### Access run results
+
+An example of the stacking implementation is available in [Stacking notebook](ttps://github.com/mlisovyi/KaggleSantander2019/Stacking.ipynb)
+A neat feature now is that we can pull ut predictions from all individual models trained in hyperparameter optimisation.
+For this, we can use the deficated API.
+
+One starts by creating a client object:
+```python
+from  mlflow.tracking import MlflowClient
+client = MlflowClient()
+```
+Then one can loop through relevant experiments:
+```python
+for exp in [x for x in client.list_experiments() if x.name in ['HP_RS_Stratified', 'HP_RS_Stratified_RandomForest']]:
+```
+Loop through the meta-information about _active_(i.e. not _deleted_) runs:
+```python
+    exp_id = exp.experiment_id
+    for run_info in client.list_run_infos(exp_id, ViewType.ACTIVE_ONLY):
+```
+Retrieve the run using the run ID extracted from the meta-information:
+```python
+run_id = run_info.run_uuid
+run = client.get_run(run_id)
+```
+At this stage we can loop through associated metrics and find the one with relevant key, e.g. `'AUC'`:
+```python
+[m.value for m in run.data.metrics if m.key=='AUC'][0] # there is a single metric value stored, so we access the -th element of returned list
+```
+Or read stored predictions for use in stacking:
+```python
+pd.read_csv('{}/oof.csv'.format(run_info.artifact_uri), header=None)[0].astype(np.float32)
+```
+
+Now all info that is relevant for stacking is in memory and we can combine predictions from different models. 
+See the notebook for an example.
+
+## That's it!
+
+Let me know if you want to learn more about specific aspects.
