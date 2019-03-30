@@ -1,4 +1,4 @@
-## Introduction.
+# Introduction.
 
 The main purpose of this repository is to illustrate usage of [MLflow](https://mlflow.org/)
 in context of a kaggle competition.
@@ -15,7 +15,7 @@ In MLflow the user defines a set of parameters and performance metrics
 and the tool takes care of keeping track of parameter changes.
 It also provides a dashboard in browser to visualise and compare results of different tests.
 
-## The data and setup.
+# The data and setup.
 
 We will use the data from the 
 [Santander Customer Transaction Prediction (2019)](https://www.kaggle.com/c/santander-customer-transaction-prediction)
@@ -27,7 +27,7 @@ The goal is:
 In order to execute the code you will need to configure a python virtual environment.
 There will be a `requirements.txt` file provided in the future to simplify setup.
 
-## MLflow usage.
+# MLflow usage.
 
 ### Bookkeeping of individual experiments
 
@@ -108,6 +108,6 @@ pd.read_csv('{}/oof.csv'.format(run_info.artifact_uri), header=None)[0].astype(n
 Now all info that is relevant for stacking is in memory and we can combine predictions from different models. 
 See the notebook for an example.
 
-## That's it!
+# That's it!
 
 Let me know if you want to learn more about specific aspects.
