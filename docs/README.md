@@ -88,8 +88,8 @@ for exp in [x for x in client.list_experiments() if x.name in ['HP_RS_Stratified
 ```
 Loop through the meta-information about _active_(i.e. not _deleted_) runs:
 ```python
-    exp_id = exp.experiment_id
-    for run_info in client.list_run_infos(exp_id, ViewType.ACTIVE_ONLY):
+exp_id = exp.experiment_id
+for run_info in client.list_run_infos(exp_id, ViewType.ACTIVE_ONLY):
 ```
 Retrieve the run using the run ID extracted from the meta-information:
 ```python
