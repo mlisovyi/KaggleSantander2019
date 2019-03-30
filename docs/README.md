@@ -73,7 +73,7 @@ i.e. building a meta-model that is trained on predictions of other models.
 
 ### Access run results
 
-An example of the stacking implementation is available in [Stacking notebook](ttps://github.com/mlisovyi/KaggleSantander2019/Stacking.ipynb)
+An example of the stacking implementation is available in [Stacking notebook](https://github.com/mlisovyi/KaggleSantander2019/Stacking.ipynb)
 A neat feature now is that we can pull ut predictions from all individual models trained in hyperparameter optimisation.
 For this, we can use the deficated API.
 
