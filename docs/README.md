@@ -25,7 +25,8 @@ The goal is:
 > ... identify which customers will make a specific transaction in the future, irrespective of the amount of money transacted. The data provided for this competition has the same structure as the real data we have available to solve this problem.
 
 In order to execute the code you will need to configure a python virtual environment.
-There will be a `requirements.txt` file provided in the future to simplify setup.
+There is a `conda.yaml` file provided to install all relevant packages.
+This file is part of [MLflow Project](https://mlflow.org/docs/latest/projects.html) definition.
 
 # MLflow usage.
 
@@ -74,7 +75,7 @@ i.e. building a meta-model that is trained on predictions of other models.
 ### Access run results
 
 An example of the stacking implementation is available in [Stacking notebook](https://github.com/mlisovyi/KaggleSantander2019/Stacking.ipynb)
-A neat feature now is that we can pull ut predictions from all individual models trained in hyperparameter optimisation.
+A neat feature now is that we can pull out predictions from all individual models trained in hyperparameter optimisation.
 For this, we can use the deficated API.
 
 One starts by creating a client object:
