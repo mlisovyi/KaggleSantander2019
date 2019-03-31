@@ -12,3 +12,4 @@ dependencies:
   - matplotlib=2.2.2 
   - pip:
     - mlflow
+    - git+https://github.com/mlisovyi/Keggler
